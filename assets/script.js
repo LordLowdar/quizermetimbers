@@ -32,19 +32,89 @@ var questions = [
     answer: "console.log",
   },
 ];
+var timerEl = document.querySelector(".time");
+var score = document.querySelector(".score");
+var secondsLeft = 20;
+var questionIndex = 0;
+var correctAnswers = 0;
 
 function nextQuestion() {
-  var randoQ = questions[Math.floor(Math.random() * questions.length)];
-
+  //var randoQ = questions[Math.floor(Math.random() * questions.length)];
+  var randoQ = questions[questionIndex];
   var title = document.querySelector(".title");
   var choices = document.querySelector(".choices ul");
   var answer = document.querySelector(".answer");
 
   title.textContent = randoQ.title;
   choices.innerHTML = randoQ.choices
-    .map((choice) => `<li>${choice}</li>`)
+    .map((choice) => `<button>${choice}</button>`)
     .join("");
   answer.textContent = randoQ.answer;
+  //compare the answer
 }
 
-document.querySelector("button").addEventListener("click", nextQuestion);
+// function saveHighScore () {
+// var playerScore = {
+//  score = answer.value
+// };
+// localStorage.setItem("score", )
+// };
+
+// function renderHighScore() {
+//  var currentScore =
+//  if
+//}
+
+//Answer text needs to be hidden and then see if its the right answer boolean??
+
+//Add visibility of next question button here?
+//Needs to only run once globally
+//function timeOut() {
+//  setInterval(function () {
+//    alert("Thats all she wrote");
+//  }, 5000);
+//}
+
+function timeOut() {
+  var timerInterval = setInterval(function () {
+    secondsLeft--;
+    timerEl.textContent = secondsLeft + " how many can you get?";
+
+    if (secondsLeft === 0) {
+      clearInterval(timerInterval);
+    }
+  }, 1000);
+  nextQuestion();
+  sendMessage();
+}
+
+function checkAnswer(e) {
+  var questionEl = questions[questionIndex];
+  if (e.target.matches("button")) {
+    if (e.target.textContent === questionEl.answer) {
+      console.log("correct");
+      correctAnswers++;
+      sendMessage();
+    } else {
+      secondsLeft -= 5;
+
+      console.log("incorrect");
+    }
+  }
+
+  questionIndex++;
+  if (questionIndex > questions.length) {
+    //End quiz here with a return
+  }
+  nextQuestion();
+}
+
+function sendMessage() {
+  score.textContent = correctAnswers;
+  console.log(correctAnswers);
+}
+
+//Store score local
+
+document.querySelector("#start").addEventListener("click", timeOut);
+document.querySelector(".choices").addEventListener("click", checkAnswer);
