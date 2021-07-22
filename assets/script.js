@@ -39,7 +39,7 @@ var questionIndex = 0;
 var correctAnswers = 0;
 
 function nextQuestion() {
-  //var randoQ = questions[Math.floor(Math.random() * questions.length)];
+  var randoQ = questions[Math.floor(Math.random() * questions.length)];
   var randoQ = questions[questionIndex];
   var title = document.querySelector(".title");
   var choices = document.querySelector(".choices ul");
@@ -49,31 +49,7 @@ function nextQuestion() {
   choices.innerHTML = randoQ.choices
     .map((choice) => `<button>${choice}</button>`)
     .join("");
-  answer.textContent = randoQ.answer;
-  //compare the answer
 }
-
-// function saveHighScore () {
-// var playerScore = {
-//  score = answer.value
-// };
-// localStorage.setItem("score", )
-// };
-
-// function renderHighScore() {
-//  var currentScore =
-//  if
-//}
-
-//Answer text needs to be hidden and then see if its the right answer boolean??
-
-//Add visibility of next question button here?
-//Needs to only run once globally
-//function timeOut() {
-//  setInterval(function () {
-//    alert("Thats all she wrote");
-//  }, 5000);
-//}
 
 function timeOut() {
   var timerInterval = setInterval(function () {
@@ -84,8 +60,9 @@ function timeOut() {
       clearInterval(timerInterval);
     }
   }, 1000);
-  nextQuestion();
+  // nextQuestion();
   sendMessage();
+  scoreSheet();
 }
 
 function checkAnswer(e) {
@@ -112,6 +89,14 @@ function checkAnswer(e) {
 function sendMessage() {
   score.textContent = correctAnswers;
   console.log(correctAnswers);
+  localStorage.setItem("score", correctAnswers);
+}
+
+function scoreSheet() {
+  playerDetails = document.createElement("form");
+  playerContent = document.createTextNode("Enter your Highscore!");
+  playerDetails.appendChild(playerContent);
+  currentDiv = document.getElementById("answer");
 }
 
 //Store score local
