@@ -38,6 +38,10 @@ var secondsLeft = 20;
 var questionIndex = 0;
 var correctAnswers = 0;
 
+window.onload = function () {
+  document.getElementById("someid").style.display = "none";
+};
+
 function nextQuestion() {
   var randoQ = questions[Math.floor(Math.random() * questions.length)];
   var randoQ = questions[questionIndex];
@@ -49,20 +53,24 @@ function nextQuestion() {
   choices.innerHTML = randoQ.choices
     .map((choice) => `<button>${choice}</button>`)
     .join("");
+
+  if (questions.length === 0) {
+    scoreSheet();
+  }
 }
 
 function timeOut() {
   var timerInterval = setInterval(function () {
     secondsLeft--;
-    timerEl.textContent = secondsLeft + " how many can you get?";
+    timerEl.textContent = secondsLeft + " How many can you get?";
 
-    if (secondsLeft === 0) {
+    if (secondsLeft <= 0) {
       clearInterval(timerInterval);
+      scoreSheet();
+      sendMessage();
+      myFunction();
     }
   }, 1000);
-  // nextQuestion();
-  sendMessage();
-  scoreSheet();
 }
 
 function checkAnswer(e) {
@@ -97,9 +105,26 @@ function scoreSheet() {
   playerContent = document.createTextNode("Enter your Highscore!");
   playerDetails.appendChild(playerContent);
   currentDiv = document.getElementById("answer");
+  currentDiv.appendChild(playerDetails);
 }
 
+function myFunction() {
+  var x = document.getElementById("someid");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
+function saveHighScore(e) {
+  console.log("clicked the save");
+  e.preventDefault();
+  localStorage.setItem("username", username);
+  localStorage.getItem("score", correctAnswers);
+}
 //Store score local
 
 document.querySelector("#start").addEventListener("click", timeOut);
+document.querySelector("#start").addEventListener("click", nextQuestion);
 document.querySelector(".choices").addEventListener("click", checkAnswer);

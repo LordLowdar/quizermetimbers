@@ -8,17 +8,40 @@
     <title>Fledgling Quiz</title>
   </head>
   <body>
+    <p id="intro">
+      Thank you for taking the time to assess your knowledge and mine! This is a
+      simple quiz to display aspects of develpoment I have learned.
+    </p>
     <div>
-      <div class="title">QUIZTASTIC</div>
+      <div class="title">QUIZERMETIMBERS</div>
       <div class="choices">
-        <ul>
-          <button id="bttn1">Choice 1</button>
-          <button id="bttn2">Choice 2</button>
-          <button id="bttn3">Choice 3</button>
-        </ul>
+        <div id="trio">
+          <ul>
+            <button id="bttn1">You got this!</button>
+            <button id="bttn2">Dont even worry!</button>
+            <button id="bttn3">No timer here! sike</button>
+          </ul>
+        </div>
       </div>
 
-      <!-- <div class="answer"></div> -->
+      <div id="answer">
+        <form id="someid">
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="James Jameson"
+          />
+          <button
+            type="submit"
+            class="btn"
+            id="saveScoreBtn"
+            onclick="saveHighScore(event)"
+          >
+            Save
+          </button>
+        </form>
+      </div>
 
       <button id="start">START</button>
     </div>
